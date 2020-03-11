@@ -1,2 +1,2 @@
 # calc_2
-Fucntional Verification of a calculator
+Developing a verification environment for RTL design of a calculator by using System Verilog
