@@ -1,3 +1,4 @@
+//Harini
 // Driver 
 // Driver is responsible to receive the stimulus generated from the generator and drive it to the DUT
 
@@ -18,9 +19,9 @@ class Driver
 
 //constructor
 	function new(virtual intf v_intf,mailbox gen_to_driv);
-// getting mailbox and interface handels from mailbox
+// getting mailbox and interface handels from Environment
 	this.v_intf = v_intf;
-	thid.gen_to_driv = gen_to_driv;
+	this.gen_to_driv = gen_to_driv;
 	endfunction
 
 // reset task
@@ -52,8 +53,7 @@ endtask
 
 // task drive --> to drive the transaction packets to the DUT 
 task drive;
- forever 
-	begin
+ 
 		Transaction trans;
 		gen_to_driv.get(trans);
 		$display("--- Driver's transmission is starting---");
@@ -123,7 +123,26 @@ task drive;
                 $display($time,": 1 trans.data_D2 %h",trans.data_D2);
 		
 		no_of_transactions++
-	end
+	
 endtask : drive
+
+// comple main task
+
+ task main;
+    forever begin
+      fork
+        //Thread-1: Waiting for reset
+        begin
+          wait(mem_vif.reset);
+        end
+        //Thread-2: Calling drive task
+        begin
+          forever
+            drive();
+        end
+      join_any
+      disable fork;
+    end
+  endtask
 
 endclass 

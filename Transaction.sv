@@ -1,3 +1,4 @@
+// Harini
 // Transaction class
 // Creating randam bit to inputs
 //
@@ -37,5 +38,34 @@ class Transaction
 		$display ($time," : %s PORTC opcode : %d  data_C1 : %h data_C2 : %h	tag: %h",class_name,req_C,data_C1,data_C2,tag_C );
 		$display ($time," : %s PORTD opcode : %d  data_D1 : %h data_D2: %h	tag: %h",class_name,req_D,data_D1,data_D2,tag_D );
 	endfunction: print_transaction
+	
+// Function to copy current items into other handle
+	
+			function Transaction do_copy();
+			transaction trans;
+			trans = new();
+			trans.req_A = this.req_A;
+			trans.req_B = this.req_B;
+			trans.req_C = this.req_C;
+			trans.req_D = this.req_D;
+			
+			trans.data_A1 = this.data_A1;
+			trans.data_B1 = this.data_B1;
+			trans.data_C1 = this.data_C1;
+			trans.data_D1 = this.data_D1;
+			
+			trans.data_A2 = this.data_A2;
+			trans.data_B2 = this.data_B2;
+			trans.data_C2 = this.data_C2;
+			trans.data_D2 = this.data_D2;
+			
+			trans.tag_A = this.tag_A;
+			trans.tag_B = this.tag_B;
+			trans.tag_C = this.tag_C;
+			trans.tag_D = this.tag_D;
+			
+				
+			return trans;
+			endfunction : copy
 	
 endclass

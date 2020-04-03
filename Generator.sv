@@ -1,3 +1,4 @@
+// Harini
 // Generator
 // its major task is to 
 // 1. declare "repeat_count" to know no of transaction to generate
@@ -8,7 +9,7 @@
 class Generator
 
 // Declare the transaction class
-	rand transaction trans
+	rand transaction trans, tr;
 
 // Declare Mailbox
 	mailbox gen_to_driv;
@@ -23,6 +24,7 @@ class Generator
 	function new(mailbox gen_to_driv,event ended_gen);
 		this.gen_to_driv = gen_to_driv;
 		this.ended_gen = ended_gen;
+		trans = new();
 	endfunction
 
 // now creating the main task , which includes--> generate ( create & randomize) repeat_count no of trasactions and put into mailbox
@@ -30,9 +32,10 @@ class Generator
 	task main();
 		repeat (repeat_count)
 			begin
-			trans = new();
+			//trans = new();
 			if (!trans.randomize())
 			$display ("randomization of trasaction failed");
+			tr = trans.do_copy();
 			gen_to_driv.put(trans);
 			end
 	    --> ended;
